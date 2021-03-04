@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GeneralStatisticsComponent } from './statistics/general-statistics/general-statistics.component';
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
 import { EmployeesItemComponent } from './employees/employees-list/employees-item/employees-item.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EmployeesItemComponent } from './employees/employees-list/employees-ite
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

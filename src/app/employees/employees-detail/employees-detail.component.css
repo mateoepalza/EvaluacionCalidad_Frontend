@@ -1,0 +1,40 @@
+.imageEmployee{
+   width: 200px;
+   height: 200px;
+   border-radius: 200px;
+   margin-top: 20px;
+   
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.nameEmployee{
+    color: #666;
+    text-align: center;
+    margin-top: 30px;
+}
+.areaEmployee{
+    color: #999;
+    text-align: center;
+    margin-bottom: 30px; 
+}
+.btn{
+    width: 80px;
+}
+.modify-btn{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+.infoEmployee{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 15px 0px;
+    border-bottom: 1px solid  #CCC;
+}
+i{
+    display: block;
+    width: 40px;
+}

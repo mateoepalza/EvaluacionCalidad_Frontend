@@ -1,0 +1,38 @@
+.Active{
+    background-color: #F7F9FC;
+}
+.linkEmpĺoyee{
+    display: block;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    text-decoration: none;
+    padding: 20px 0px 20px 10px;
+    border-bottom: 1px solid #DDD;
+}
+.linkEmpĺoyee:hover{
+    background-color: #F7F9FC;
+}
+.imageEmployee{
+    border-radius: 500px !important;
+    overflow: hidden;
+    width: 80px;
+}
+.imageEmployee > img{
+    width: 100%;
+}
+.infoEmployee{
+    display: flex;
+    flex-flow: column nowrap;
+    padding-left: 15px;
+}
+.infoEmployee > h3{
+    color: #444;
+    font-size: 18px;
+    margin-top: 10px;
+}
+.infoEmployee > h2 {
+    font-size: 13px;
+    color: #999;
+}
