@@ -20,12 +20,12 @@
     margin-bottom: 30px; 
 }
 .btn{
-    width: 80px;
+    width: 100px;
 }
 .modify-btn{
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 .infoEmployee{
     display: flex;

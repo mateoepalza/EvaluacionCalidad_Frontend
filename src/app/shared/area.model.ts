@@ -1,9 +1,9 @@
 export class Area{
     public id: string;
-    public name: string;
+    public nombre: string;
 
-    constructor(id: string, name: string){
+    constructor(id: string, nombre: string){
        this.id = id;
-       this.name = name; 
+       this.nombre = nombre; 
     }
 }

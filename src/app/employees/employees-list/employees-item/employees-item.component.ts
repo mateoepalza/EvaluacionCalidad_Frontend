@@ -16,6 +16,7 @@ export class EmployeesItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.employee);
   }
 
 }

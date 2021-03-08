@@ -25,7 +25,9 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
     /**
      * Get the initial employee
      */
-    this.employees = this.employeeService.getEmployees();
+    this.employeeService.getEmployees().subscribe( (data) =>{
+      this.employees = data;
+    });
     /**
      * Subscription which will tell you when the employee list was updated
      */

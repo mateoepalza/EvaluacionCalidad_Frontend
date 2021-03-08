@@ -1,16 +1,16 @@
 <a 
     routerLinkActive="Active"
-    [routerLink]="[employee.id]"
+    [routerLink]="[employee._id]"
     style="cursor:pointer"
     class="linkEmpĺoyee"
     >
     <div class="imageEmployee">
         <img 
             [src]="employee.imagePath"
-            alt="{{ employee.name }}">
+            alt="{{ employee.nombre }}">
     </div>
     <div class="infoEmployee">
-        <h3>{{ employee.name }}</h3>
-        <h2>{{ employee.area.name }}</h2>
+        <h3>{{ employee.nombre }}</h3>
+        <h2>{{ employee.area.nombre }}</h2>
     </div>
 </a>

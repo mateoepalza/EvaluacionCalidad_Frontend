@@ -7,21 +7,24 @@
 <div class="row">
     <div class="col-12">
         <h1 class="nameEmployee">
-            {{ employee.name }}
+            {{ employee.nombre }}
         </h1>
     </div>
 </div>
 <div class="row">
     <div class="col-12">
         <h3 class="areaEmployee">
-            {{ employee.area.name }}
+            {{ employee.area.nombre }}
         </h3>
     </div>
 </div>
 <div class="row">
     <div class="col-8 info">
+        <div class="infoEmployee"> <span class="icon"><i class="fas fa-id-card"></i></span> {{ employee._id }}</div>
+        <div class="infoEmployee"> <span class="icon"><i class="fas fa-briefcase"></i></span> {{ employee.cargo }}</div>
+        <div class="infoEmployee"> <span class="icon"><i class="fas fa-cog"></i></span> {{ employee.proceso }}</div>
         <div class="infoEmployee"> <span class="icon"><i class="far fa-envelope"></i></span> {{ employee.email }}</div>
-        <div class="infoEmployee"> <span class="icon"><i class="fas fa-mobile-alt"></i></span> {{ employee.phone }}</div>
+        <div class="infoEmployee"> <span class="icon"><i class="fas fa-mobile-alt"></i></span> {{ employee.telefono }}</div>
     </div>
     <div class="col-4 modify-btn">
         <button class="btn btn-primary" [routerLink]="['edit']">

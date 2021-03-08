@@ -13,6 +13,7 @@ import { GeneralStatisticsComponent } from './statistics/general-statistics/gene
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
 import { EmployeesItemComponent } from './employees/employees-list/employees-item/employees-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

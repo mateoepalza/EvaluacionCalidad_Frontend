@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Area } from 'src/app/shared/area.model';
 import { AreaService } from 'src/app/shared/area.service';
 import { Employee } from '../employee.model';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'app-employees-edit',
@@ -38,7 +39,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
    */
   image: any;
 
-  constructor(private route: ActivatedRoute, private areaService: AreaService) { }
+  constructor(private route: ActivatedRoute, private areaService: AreaService, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     /**
@@ -57,8 +58,11 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
       /**
        * We create the controls that we defined in the HMTL
        */
+      "id": new FormControl(),
       "username": new FormControl(),
       "area": new FormControl(0),
+      "cargo": new FormControl(),
+      "proceso": new FormControl(),
       "telefono": new FormControl(),
       "email": new FormControl(),
       "imagePath": new FormControl()
@@ -91,9 +95,12 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   initForm() {
     if (this.editMode) {
       this.employeeForm.setValue({
-        "username": this.employee.name,
+        "id": this.employee._id,
+        "username": this.employee.nombre,
         "area": this.employee.area.id,
-        "telefono": this.employee.phone,
+        "cargo": this.employee.cargo,
+        "proceso": this.employee.proceso,
+        "telefono": this.employee.telefono,
         "email": this.employee.email,
         "imagePath": ""
       })
@@ -101,7 +108,25 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    /**
+     * Create the new employee
+     */
+    const newEmployee = new Employee(
+      this.employeeForm.value['id'],
+      this.employeeForm.value['username'],
+      this.employeeForm.value['imagePath'],
+      this.employeeForm.value['area'],
+      this.employeeForm.value['cargo'],
+      this.employeeForm.value['proceso'],
+      this.employeeForm.value['telefono'],
+      this.employeeForm.value['email'],
+    );
 
+    if(this.editMode){
+      this.employeeService.updateEmployee(newEmployee);
+    }else{
+      this.employeeService.createEmployee(newEmployee);
+    }
   }
   
   handleImage(event: any){

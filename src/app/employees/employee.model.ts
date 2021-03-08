@@ -2,19 +2,23 @@ import { EmailValidator } from "@angular/forms";
 import { Area } from "../shared/area.model";
 
 export class Employee{
-    public id: string;
-    public name: string;
+    public _id: string;
+    public nombre: string;
     public imagePath: string;
     public area: Area;
-    public phone: string;
+    public cargo: string;
+    public proceso: string;
+    public telefono: string;
     public email: string;
 
-    constructor(id: string, name: string, imagePath: string, area: Area, phone: string, email: string){
-        this.id = id;
-        this.name = name;
+    constructor(_id: string, nombre: string, imagePath: string, area: Area, cargo:string, proceso: string, telefono: string, email: string){
+        this._id = _id;
+        this.nombre = nombre;
         this.imagePath = imagePath;
         this.area = area;
-        this.phone = phone;
+        this.cargo = cargo;
+        this.proceso = proceso;
+        this.telefono = telefono;
         this.email = email;
     }
 }
