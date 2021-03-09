@@ -1,0 +1,23 @@
+.form-group{
+    width: auto;
+    background-color: #FFF;
+    padding: 35px;
+    border-radius: 15px;
+    margin: 40px 0px;
+    box-shadow: -6px 7px 5px 0px rgb(227, 237, 253, 0.3);
+}
+.form-group > p{
+    margin-bottom: 25px;
+}
+.sub-title{
+    color: #5858A6;
+}
+.section-title{
+    color: #5858A6;
+}
+p{
+    color: #636e7a;
+}
+label{
+    color: #636e7a;
+}

@@ -14,6 +14,7 @@ import { EmployeesListComponent } from './employees/employees-list/employees-lis
 import { EmployeesItemComponent } from './employees/employees-list/employees-item/employees-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateStatisticComponent } from './statistics/create-statistic/create-statistic.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     StatisticsDetatilComponent,
     GeneralStatisticsComponent,
     EmployeesListComponent,
-    EmployeesItemComponent
+    EmployeesItemComponent,
+    CreateStatisticComponent
   ],
   imports: [
     BrowserModule,

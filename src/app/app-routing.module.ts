@@ -4,6 +4,7 @@ import { EmployeesDetailComponent } from "./employees/employees-detail/employees
 import { ResolverService } from "./employees/employees-detail/resolver.service";
 import { EmployeesEditComponent } from "./employees/employees-edit/employees-edit.component";
 import { EmployeesComponent } from "./employees/employees.component";
+import { CreateStatisticComponent } from "./statistics/create-statistic/create-statistic.component";
 import { GeneralStatisticsComponent } from "./statistics/general-statistics/general-statistics.component";
 import { StatisticsDetatilComponent } from "./statistics/statistics-detatil/statistics-detatil.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
@@ -24,6 +25,7 @@ const routes = [
      */
     { path: 'stats', component: StatisticsComponent, children:[
         { path: '', component: GeneralStatisticsComponent},
+        { path: 'new', component: CreateStatisticComponent},
         { path: ':id', component: StatisticsDetatilComponent}
     ]}
 ];
