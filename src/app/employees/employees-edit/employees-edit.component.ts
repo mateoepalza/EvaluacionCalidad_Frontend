@@ -45,11 +45,9 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     /**
      * Get all the areas
      */
-    this.subscriber = this.areaService.areaListener.subscribe((data) =>{
-      this.areasList = data;
+    this.subscriber = this.areaService.getAreas().subscribe( (data) =>{
+        this.areasList = data;
     });
-
-    this.areasList = this.areaService.getAreas();
     
     /**
      * We create the elements of our formGroup
@@ -94,16 +92,18 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
 
   initForm() {
     if (this.editMode) {
+      
       this.employeeForm.setValue({
         "id": this.employee._id,
         "username": this.employee.nombre,
-        "area": this.employee.area.id,
+        "area": this.employee.area._id,
         "cargo": this.employee.cargo,
         "proceso": this.employee.proceso,
         "telefono": this.employee.telefono,
         "email": this.employee.email,
-        "imagePath": ""
+        "imagePath": this.employee.imagePath
       })
+      
     }
   }
 
@@ -131,7 +131,6 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   
   handleImage(event: any){
     this.image = event.target.files[0];
-    console.log(this.image);
   }
 
 }

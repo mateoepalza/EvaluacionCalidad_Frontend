@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Employee } from '../employee.model';
 import { EmployeeService } from '../employee.service';
@@ -19,15 +20,13 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    */
   subscription: Subscription;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private router: Router, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     /**
      * Get the initial employee
      */
-    this.employeeService.getEmployees().subscribe( (data) =>{
-      this.employees = data;
-    });
+    this.employeeService.getEmployees();
     /**
      * Subscription which will tell you when the employee list was updated
      */
@@ -43,4 +42,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  onNewEmployee(){
+    this.router.navigate(["/employees","new"]);
+  }
 }

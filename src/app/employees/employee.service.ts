@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { map, tap, catchError, elementAt } from "rxjs/operators";
 import { Area } from "../shared/area.model";
 import { Employee } from "./employee.model";
 
@@ -9,7 +9,7 @@ import { Employee } from "./employee.model";
 @Injectable({
     providedIn: "root"
 })
-export class EmployeeService{
+export class EmployeeService {
 
     /**
      * Create our listener 
@@ -19,7 +19,9 @@ export class EmployeeService{
     /**
      * List of employees
      */
-    private employees: Employee[] = [
+    private employees: Employee[] = [];
+
+    /*private employees: Employee[] = [
         new Employee(
             "1",
             "Mateo Epalza Ramirez",
@@ -50,95 +52,104 @@ export class EmployeeService{
             "3133216544",
             "robert05_99@yahoo.es"
         )
-    ]
-    
-    constructor(private http: HttpClient){
+    ]*/
+
+    constructor(private http: HttpClient) {
 
     }
 
     /**
      * Get all the employees
      */
-    getEmployees(){
-        return this.http.get<{[s:string]: Employee[]}>(
+    getEmployees() {
+        this.http.get<{ [s: string]: Employee[] }>(
             "http://127.0.0.1:4242/employees/"
-            ).pipe(
-                map( (data) =>{
-                    console.log(data);
-                    /**
-                     * Creo una lista empleados
-                     */
-                    const resData: Employee[] = [];
+        ).pipe(
+            map((data) => {
+                /**
+                 * Creo una lista empleados
+                 */
+                const resData: Employee[] = [];
 
+                /**
+                 * Itero sobre cada key del data devuelta por el back
+                 */
+                for (let key in data) {
                     /**
-                     * Itero sobre cada key del data devuelta por el back
+                     * Revisamos que el data si tenga esa propiedad
                      */
-                    for(let key in data){
+                    if (data.hasOwnProperty(key)) {
+                        /*
+                        const elem = data[key];
                         /**
-                         * Revisamos que el data si tenga esa propiedad
+                         * Iteramos por cada elemento y lo guardamos 
+                         
+                        elem.forEach(obj =>{
+                            resData.push(obj);
+                        });
+                        */
+                        /**
+                         * This is the same to the process above
                          */
-                        if (data.hasOwnProperty(key)){
-                            /*
-                            const elem = data[key];
-                            /**
-                             * Iteramos por cada elemento y lo guardamos 
-                             
-                            elem.forEach(obj =>{
-                                resData.push(obj);
-                            });
-                            */
-                            /**
-                             * This is the same to the process above
-                             */
-                            resData.push(...data[key]);
-                        } 
+                        resData.push(...data[key]);
                     }
-                    
-                    return resData;
-                })
-            );
+                }
+
+                return resData;
+            })
+        ).subscribe((resEmployees) => {
+            this.employees = resEmployees;
+            this.employeesListener.next(this.employees.slice());
+        });
     }
 
     /**
      * Get one employee
      */
-    getEmployee(id:string){
+    getEmployee(id: string) {
         /**
          * Search the element by id
          */
-        return this.http.get(
-            "http://127.0.0.1:4242/employees/"+id
-        ).pipe(map(data =>{
-            let resEmployee: Employee;
-            for(let key in data){
-                if(data.hasOwnProperty(key)){
-                    resEmployee = data[key];
-                }            
-            }
-            return resEmployee;
-        }))
+        const emp = this.employees.find((elem) => elem._id == id);
+
+        /**
+         * If the element doesn't exists in the array we will search of it 
+         */
+        if (emp === undefined) {
+            return this.http.get<Employee>(
+                "http://127.0.0.1:4242/employees/" + id
+            ).pipe(
+                map(data => {
+                    let resEmployee: Employee;
+
+                    for (let key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            /**
+                             * Obtengo el unico elemento del array
+                             */
+                            resEmployee = data[key][0];
+                        }
+                    }
+                    return resEmployee;
+                }),
+                tap((resEmployee) => {
+                    this.employees.push(resEmployee);
+                }))
+        }
+
+        return emp;
+
     }
 
     /**
      * Create a new employee
      */
-    createEmployee(employee: Employee){
-        /*const postEmployee = {
-            "_id": employee._id,
-            "nombre": employee.nombre,
-            "area": employee.area.id,
-            "cargo": employee.cargo,
-            "proceso": employee.proceso,
-            "email": employee.email,
-            "telefono": employee.telefono,
-            "imagePath": employee.imagePath
-        }*/
+    createEmployee(employee: Employee) {
         this.http.post(
-            "http://127.0.0.1:4242/employees", 
+            "http://127.0.0.1:4242/employees",
             employee)
-            .subscribe((data)=>{
-                console.log(data);
-            }, (error)=>{
+            .subscribe((data) => {
+            }, (error) => {
                 console.error(error);
             });
         /**
@@ -151,35 +162,50 @@ export class EmployeeService{
          */
         this.employeesListener.next(this.employees.slice());
     }
-    
+
     /**
      *  Delete an specific employee 
      */
-    deleteEmployee(id:string){
-        /**
-         * search for the element that has the id passed
-         */
-        const element = this.employees.find((obj) =>{
-           obj._id === id; 
+    deleteEmployee(id: string) {
+        
+        this.http.delete(
+            "http://127.0.0.1:4242/employees/"+id
+        ).subscribe(() => {
+            /**
+            * search for the element that has the id passed
+            */
+            const index = this.employees.findIndex((obj) => obj._id === id );
+
+            /**
+             * Delete the element using the index
+             */
+            this.employees.splice(index, 1);
+
+            /**
+             * Emit the new list of employees
+             */
+            this.employeesListener.next(this.employees.slice());
+
         });
-        
-        /**
-         * Find the index of the object
-         */
-        const index = this.employees.indexOf(element);
-        
-        /**
-         * Delete the element using the index
-         */
-        this.employees.slice(index, 1);
-
-        /**
-         * Emit the new list of employees
-         */
-        this.employeesListener.next(this.employees.slice());
     }
-    
-    updateEmployee(employee: Employee){
 
+    updateEmployee(employee: Employee) {
+        this.http.put(
+            "http://127.0.0.1:4242/employees/" + employee._id,
+            employee
+        ).subscribe(() => {
+            /**
+             * Buscamos el index del empleado
+             */
+            const employeeIndex = this.employees.findIndex((elem) => elem._id === employee._id);
+            /**
+             * Actualizamos el objeto en esa posición
+             */
+            this.employees[employeeIndex] = employee;
+            /**
+             * Emitimos para que se actualice la lista
+             */
+            this.employeesListener.next(this.employees.slice());
+        });
     }
 }

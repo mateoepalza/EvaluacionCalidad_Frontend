@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AreaService } from 'src/app/shared/area.service';
 import { Employee } from '../employee.model';
 import { EmployeeService } from '../employee.service';
@@ -10,7 +11,7 @@ import { EmployeeService } from '../employee.service';
   templateUrl: './employees-detail.component.html',
   styleUrls: ['./employees-detail.component.css']
 })
-export class EmployeesDetailComponent implements OnInit {
+export class EmployeesDetailComponent implements OnInit, OnDestroy {
   //TODO change the HTML because it is just a detail, add an option to edit and another option to create new
   /**
    * The actual employee
@@ -25,24 +26,32 @@ export class EmployeesDetailComponent implements OnInit {
    */
   editMode: boolean = false;
   /**
-   * Area
+   * Subscription from the ResolverService
    */
+  subscribeEmployee: Subscription;
 
-  constructor(private route: ActivatedRoute) { }
+
+  constructor(private route: ActivatedRoute, private router: Router, private employeeService:EmployeeService) { }
 
   ngOnInit(): void {
     /**
      * We are using a resolver to get the information of the employee selected
      */
-    this.route.data.subscribe((data) =>{
+    this.subscribeEmployee = this.route.data.subscribe((data) =>{
       
       /**
        * Get the info of the employee
        */
       this.employee = data['employee'];
     });
-    
-    
   }
 
+  ngOnDestroy(){
+    this.subscribeEmployee.unsubscribe();
+  }
+  
+  onDelete(){
+    this.employeeService.deleteEmployee(this.route.snapshot.params['id']);
+    this.router.navigate(['employees']);
+  }
 }
