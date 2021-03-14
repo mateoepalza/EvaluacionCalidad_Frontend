@@ -1,3 +1,9 @@
+.detail-back{
+    background-color: #FFF;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: -6px 7px 5px 0px rgb(227, 237, 253, 0.3);
+}
 .imageEmployee{
    width: 200px;
    height: 200px;
@@ -33,6 +39,9 @@
     align-items: center;
     padding: 15px 0px;
     border-bottom: 1px solid  #CCC;
+}
+.icon{
+    margin-left: 25px;
 }
 i{
     display: block;

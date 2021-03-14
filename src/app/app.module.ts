@@ -15,6 +15,7 @@ import { EmployeesItemComponent } from './employees/employees-list/employees-ite
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateStatisticComponent } from './statistics/create-statistic/create-statistic.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CreateStatisticComponent } from './statistics/create-statistic/create-s
     GeneralStatisticsComponent,
     EmployeesListComponent,
     EmployeesItemComponent,
-    CreateStatisticComponent
+    CreateStatisticComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

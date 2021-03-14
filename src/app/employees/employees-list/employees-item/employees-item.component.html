@@ -4,10 +4,8 @@
     style="cursor:pointer"
     class="linkEmpĺoyee"
     >
-    <div class="imageEmployee">
-        <img 
-            [src]="employee.imagePath"
-            alt="{{ employee.nombre }}">
+    <div class="imageEmployee" style="background-image: url('{{employee.imagePath}}');">
+     
     </div>
     <div class="infoEmployee">
         <h3>{{ employee.nombre }}</h3>

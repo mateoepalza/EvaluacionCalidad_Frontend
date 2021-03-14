@@ -1,20 +1,20 @@
-<div class="row mb-3">
-    <div class="col-12">
-        <button class="btn btn-primary w-100" (click)="onNewEmployee()">
-            Nuevo empleado
-        </button>
+<div class="list-back p-5">
+    <div class="row mb-3">
+        <div class="col-12">
+            <button class="btn btn-primary w-100" (click)="onNewEmployee()">
+                Nuevo empleado
+            </button>
+        </div>
     </div>
-</div>
-<div class="row mb-3">
-    <div class="col-12">
-        <input class="form-control" type="search" placeholder="Ingrese un nombre">
+    <div class="row mb-3">
+        <div class="col-12">
+            <input class="form-control" type="search" placeholder="Ingrese un nombre">
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <app-employees-item 
-            *ngFor="let employee of employees"
-            [employee]="employee">
-        </app-employees-item>
+    <div class="row">
+        <div class="col-12">
+            <app-employees-item *ngFor="let employee of employees" [employee]="employee">
+            </app-employees-item>
+        </div>
     </div>
 </div>

@@ -1,0 +1,12 @@
+<div class="alert alert-success" *ngIf="state; else badAlert">
+    <strong>¡Enhorabuena! </strong>
+    {{ message }}
+    <button type="button" class="close-btn" (click)="onClose()"><i class="fas fa-times"></i></button>
+</div>
+<ng-template #badAlert>
+    <div class="alert alert-danger">
+        <strong>¡Ups! </strong>
+        {{ message }}
+        <button type="button" class="close-btn" (click)="onClose()"><i class="fas fa-times"></i></button>
+    </div>
+</ng-template>

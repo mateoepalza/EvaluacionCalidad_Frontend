@@ -18,6 +18,10 @@
     border-radius: 500px !important;
     overflow: hidden;
     width: 80px;
+    height: 80px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .imageEmployee > img{
     width: 100%;

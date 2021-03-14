@@ -35,6 +35,13 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
    */
   subscriber: Subscription;
   /**
+   * Shows the alert
+   */
+  alert: {
+    message: string;
+    state: boolean;
+  } = null;
+  /**
    * 
    */
   image: any;
@@ -45,10 +52,10 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     /**
      * Get all the areas
      */
-    this.subscriber = this.areaService.getAreas().subscribe( (data) =>{
-        this.areasList = data;
+    this.subscriber = this.areaService.getAreas().subscribe((data) => {
+      this.areasList = data;
     });
-    
+
     /**
      * We create the elements of our formGroup
      */
@@ -83,7 +90,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     /**
      * This prevent memory leak
      */
@@ -92,7 +99,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
 
   initForm() {
     if (this.editMode) {
-      
+
       this.employeeForm.setValue({
         "id": this.employee._id,
         "username": this.employee.nombre,
@@ -103,7 +110,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
         "email": this.employee.email,
         "imagePath": this.employee.imagePath
       })
-      
+
     }
   }
 
@@ -122,15 +129,52 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
       this.employeeForm.value['email'],
     );
 
-    if(this.editMode){
-      this.employeeService.updateEmployee(newEmployee);
-    }else{
-      this.employeeService.createEmployee(newEmployee);
+    if (this.editMode) {
+      this.employeeService.updateEmployee(newEmployee).subscribe((data) => {
+
+        this.alert = {
+          message: data.message,
+          state: true
+        };
+
+      }, (error) => {
+
+        console.error(error);
+
+        this.alert = {
+          state: false,
+          message: error
+        }
+
+      });
+    } else {
+      this.employeeService.createEmployee(newEmployee).subscribe((data) => {
+
+        this.alert = {
+          state: true,
+          message: data.message
+        }
+
+        this.employeeForm.reset();
+      }, (error) => {
+
+        console.log(error);
+
+        this.alert = {
+          state: false,
+          message: error
+        }
+      });
     }
+
   }
-  
-  handleImage(event: any){
+
+  handleImage(event: any) {
     this.image = event.target.files[0];
+  }
+
+  onHandleAlert() {
+    this.alert = null;
   }
 
 }

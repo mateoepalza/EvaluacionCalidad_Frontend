@@ -1,37 +1,43 @@
-<div class="row">
-    <div class="col-12 d-flex justify-content-center">
-        <div class="imageEmployee" style="background-image: url('{{employee.imagePath}}');">
+<div class="detail-back p-5">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="imageEmployee" style="background-image: url('{{employee.imagePath}}');">
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h1 class="nameEmployee">
-            {{ employee.nombre }}
-        </h1>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="nameEmployee">
+                {{ employee.nombre }}
+            </h1>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h3 class="areaEmployee">
-            {{ employee.area.nombre }}
-        </h3>
+    <div class="row">
+        <div class="col-12">
+            <h3 class="areaEmployee">
+                {{ employee.area.nombre }}
+            </h3>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-8 info">
-        <div class="infoEmployee"> <span class="icon"><i class="fas fa-id-card"></i></span> {{ employee._id }}</div>
-        <div class="infoEmployee"> <span class="icon"><i class="fas fa-briefcase"></i></span> {{ employee.cargo }}</div>
-        <div class="infoEmployee"> <span class="icon"><i class="fas fa-cog"></i></span> {{ employee.proceso }}</div>
-        <div class="infoEmployee"> <span class="icon"><i class="far fa-envelope"></i></span> {{ employee.email }}</div>
-        <div class="infoEmployee"> <span class="icon"><i class="fas fa-mobile-alt"></i></span> {{ employee.telefono }}</div>
+    <div class="row">
+        <div class="col-8 info">
+            <div class="infoEmployee"> <span class="icon"><i class="fas fa-id-card"></i></span> {{ employee._id }}</div>
+            <div class="infoEmployee"> <span class="icon"><i class="fas fa-briefcase"></i></span> {{ employee.cargo }}
+            </div>
+            <div class="infoEmployee"> <span class="icon"><i class="fas fa-cog"></i></span> {{ employee.proceso }}</div>
+            <div class="infoEmployee"> <span class="icon"><i class="far fa-envelope"></i></span> {{ employee.email }}
+            </div>
+            <div class="infoEmployee"> <span class="icon"><i class="fas fa-mobile-alt"></i></span> {{ employee.telefono
+                }}</div>
+        </div>
+        <div class="col-4 modify-btn d-flex align-items-center justify-content-center">
+            <button class="btn btn-primary w-100 mb-3" [routerLink]="['edit']">
+                Edit
+            </button>
+            <button class="btn btn-danger w-100 mt-3" (click)="onDelete()">
+                Delete
+            </button>
+        </div>
     </div>
-    <div class="col-4 modify-btn">
-        <button class="btn btn-primary" [routerLink]="['edit']">
-            Edit
-        </button>
-        <button class="btn btn-danger" (click)="onDelete()">
-            Delete
-        </button>
-    </div>
+
 </div>

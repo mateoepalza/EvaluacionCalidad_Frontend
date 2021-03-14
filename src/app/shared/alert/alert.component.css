@@ -1,0 +1,8 @@
+.close-btn{
+    border: 0px;
+    background-color: transparent;
+    color: #0f5132;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}

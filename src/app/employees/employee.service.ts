@@ -1,8 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import { map, tap, catchError, elementAt } from "rxjs/operators";
-import { Area } from "../shared/area.model";
+import { Subject, throwError } from "rxjs";
+import { map, tap, catchError } from "rxjs/operators";
 import { Employee } from "./employee.model";
 
 
@@ -96,7 +95,8 @@ export class EmployeeService {
                 }
 
                 return resData;
-            })
+            }),
+            catchError(this.handleError)
         ).subscribe((resEmployees) => {
             this.employees = resEmployees;
             this.employeesListener.next(this.employees.slice());
@@ -134,7 +134,9 @@ export class EmployeeService {
                 }),
                 tap((resEmployee) => {
                     this.employees.push(resEmployee);
-                }))
+                }),
+                catchError(this.handleError)
+            )
         }
 
         return emp;
@@ -145,36 +147,39 @@ export class EmployeeService {
      * Create a new employee
      */
     createEmployee(employee: Employee) {
-        this.http.post(
+        return this.http.post<{ [s: string]: string }>(
             "http://127.0.0.1:4242/employees",
-            employee)
-            .subscribe((data) => {
-            }, (error) => {
-                console.error(error);
-            });
-        /**
-         * Add the neew employee to the list
-         */
-        this.employees.push(employee);
+            employee).pipe(
+                tap(() => {
+                    /**
+                    * Add the neew employee to the list
+                    */
+                    this.employees.push(employee);
 
-        /**
-         * Emit the new list of employees to all the subscribers
-         */
-        this.employeesListener.next(this.employees.slice());
+                    /**
+                     * Emit the new list of employees to all the subscribers
+                     */
+                    this.employeesListener.next(this.employees.slice());
+
+                }),
+                catchError(this.handleError)
+            );
     }
 
     /**
      *  Delete an specific employee 
      */
     deleteEmployee(id: string) {
-        
+
         this.http.delete(
-            "http://127.0.0.1:4242/employees/"+id
+            "http://127.0.0.1:4242/employees/" + id
+        ).pipe(
+            catchError(this.handleError)
         ).subscribe(() => {
             /**
             * search for the element that has the id passed
             */
-            const index = this.employees.findIndex((obj) => obj._id === id );
+            const index = this.employees.findIndex((obj) => obj._id === id);
 
             /**
              * Delete the element using the index
@@ -190,22 +195,37 @@ export class EmployeeService {
     }
 
     updateEmployee(employee: Employee) {
-        this.http.put(
+        return this.http.put<{ [s: string]: string }>(
             "http://127.0.0.1:4242/employees/" + employee._id,
             employee
-        ).subscribe(() => {
-            /**
-             * Buscamos el index del empleado
-             */
-            const employeeIndex = this.employees.findIndex((elem) => elem._id === employee._id);
-            /**
-             * Actualizamos el objeto en esa posición
-             */
-            this.employees[employeeIndex] = employee;
-            /**
-             * Emitimos para que se actualice la lista
-             */
-            this.employeesListener.next(this.employees.slice());
-        });
+        ).pipe(
+            tap(() => {
+                /**
+                 * Buscamos el index del empleado
+                 */
+                const employeeIndex = this.employees.findIndex((elem) => elem._id === employee._id);
+                /**
+                 * Actualizamos el objeto en esa posición
+                 */
+                this.employees[employeeIndex] = employee;
+                /**
+                 * Emitimos para que se actualice la lista
+                 */
+                this.employeesListener.next(this.employees.slice());
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    private handleError(errorRes : HttpErrorResponse){
+        let message = "ocurrió algo inesperado";
+        console.log(errorRes);
+
+        if(!errorRes || !errorRes.error || !errorRes.error.message){
+            return throwError(message);
+        }
+        
+        message = errorRes.error.message;
+        return throwError(message);
     }
 }
