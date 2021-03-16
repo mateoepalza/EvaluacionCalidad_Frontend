@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Employee } from 'src/app/employees/employee.model';
 
 @Component({
   selector: 'app-statistics-detatil',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./statistics-detatil.component.css']
 })
 export class StatisticsDetatilComponent implements OnInit {
+
+  @Input() employee: Employee;
 
   constructor() { }
 

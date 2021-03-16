@@ -25,7 +25,7 @@ const routes = [
      */
     { path: 'stats', component: StatisticsComponent, children:[
         { path: '', component: GeneralStatisticsComponent},
-        { path: 'new', component: CreateStatisticComponent},
+        { path: ':id/new', component: CreateStatisticComponent, resolve: {employee : ResolverService}},
         { path: ':id', component: StatisticsDetatilComponent}
     ]}
 ];

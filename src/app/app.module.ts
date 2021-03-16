@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateStatisticComponent } from './statistics/create-statistic/create-statistic.component';
 import { AlertComponent } from './shared/alert/alert.component';
+import { ProgressComponent } from './statistics/create-statistic/progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AlertComponent } from './shared/alert/alert.component';
     EmployeesListComponent,
     EmployeesItemComponent,
     CreateStatisticComponent,
-    AlertComponent
+    AlertComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,
